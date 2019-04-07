@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".client.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10">
+
+
+        <ImageView
+            android:id="@+id/title_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@drawable/title_app"
+            android:gravity="center"
+            android:layout_weight="3"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+
+
+            <android.support.design.button.MaterialButton
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:id="@+id/menu_btn_online"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="START ONLINE"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:padding="30dp"
+                android:layout_margin="20dp"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/white"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="2dp" />
+
+            <android.support.design.button.MaterialButton
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:id="@+id/menu_btn_offline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="START OFFLINE"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:padding="30dp"
+                android:layout_margin="20dp"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/white"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="2dp" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/text_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:text="NEVEUX DU GENIEBRE Tristan\nIIA - 2019"
+            android:gravity="center"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
