@@ -1,5 +1,6 @@
 package iia.tristan.persistanceclient.client;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -44,10 +45,12 @@ public class ChooseAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     private void switchToManagerView() {
-
+        Intent menuIntent = new Intent(this, ManagerActivity.class);
+        startActivity(menuIntent);
     }
 
     private void switchToSellerView() {
-
+        Intent menuIntent = new Intent(this, VisiteActivity.class);
+        startActivity(menuIntent);
     }
 }

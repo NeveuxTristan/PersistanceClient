@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+
+        <ImageView
+            android:id="@+id/title_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:src="@drawable/title_app" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Welcome PERROUAULT Jeremy !"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="vertical">
+            
+            <android.support.design.button.MaterialButton
+                android:id="@+id/btn_manager_select_seller1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:padding="30dp"
+                android:text="SELLER - NEVEUX T."
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:iconSize="20dp"
+                app:iconGravity="textStart"
+                app:icon="@drawable/employee"
+                app:iconTint="@android:color/secondary_text_light"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/white"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="2dp" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/btn_manager_select_seller2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:padding="30dp"
+                android:text="SELLER - DOP K."
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:iconGravity="textStart"
+                app:iconTint="@android:color/secondary_text_light"
+                app:iconSize="20dp"
+                app:icon="@drawable/employee"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/white"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="2dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Please sellect the seller you want to manage"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
