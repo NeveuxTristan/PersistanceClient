@@ -2,15 +2,46 @@ package iia.tristan.persistanceclient.client;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import iia.tristan.persistanceclient.R;
+import iia.tristan.persistanceclient.client.adapter.VisiteAdapter;
+import iia.tristan.persistanceclient.client.item.VisiteItem;
 
 public class VisiteActivity extends AppCompatActivity {
 
+    private ListView listVisites;
+
+    private VisiteItem itemSelected;
+    private int idItemSelected = -1;
+    private View lastViewSelected = null;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visite);
+
+        listVisites = findViewById(R.id.list_visite);
+
+        final VisiteItem[] items = null;
+
+        listVisites.setAdapter(new VisiteAdapter(getApplicationContext(), items));
+
+        listVisites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                selectItem(view, position);
+            }
+        });
+    }
+
+    private void selectItem(View view, int position)
+    {
+
     }
 
 }
