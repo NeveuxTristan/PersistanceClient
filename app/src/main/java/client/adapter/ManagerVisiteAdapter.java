@@ -1,4 +1,4 @@
-package iia.tristan.persistanceclient.client.adapter;
+package client.adapter;
 
 import android.content.Context;
 import android.graphics.Color;

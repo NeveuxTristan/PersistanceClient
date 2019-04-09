@@ -4,14 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import iia.tristan.persistanceclient.client.MainActivity;
+import client.MainActivity;
 import share.dataObject.Magasin;
 import share.dataObject.Manager;
 import share.dataObject.Seller;
@@ -61,6 +58,8 @@ public class JsonLoaderImpl implements JsonLoader {
 
     private void loadMagasinInfos(String file) throws JSONException
     {
+        if (file.isEmpty())
+            return;
         JSONObject obj = new JSONObject(file);
         JSONArray arr = obj.getJSONArray("magasins");
         JSONObject o;
@@ -80,6 +79,8 @@ public class JsonLoaderImpl implements JsonLoader {
 
     private void loadUserInfos(String file) throws JSONException
     {
+        if (file.isEmpty())
+            return;
         JSONObject obj = new JSONObject(file);
         JSONArray arr = obj.getJSONArray("users");
         JSONObject o;
@@ -114,6 +115,8 @@ public class JsonLoaderImpl implements JsonLoader {
 
     private void loadVisitesInfos(String file) throws JSONException
     {
+        if (file.isEmpty())
+            return;
         JSONObject obj = new JSONObject(file);
         JSONArray arr = obj.getJSONArray("visites");
         JSONObject o;

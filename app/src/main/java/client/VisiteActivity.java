@@ -1,4 +1,4 @@
-package iia.tristan.persistanceclient.client;
+package client;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import iia.tristan.persistanceclient.R;
-import iia.tristan.persistanceclient.client.adapter.VisiteAdapter;
-import iia.tristan.persistanceclient.client.connection.ConnectionManager;
+import client.adapter.VisiteAdapter;
+import client.connection.ConnectionManager;
 import share.dataObject.Visite;
 import share.manager.DataManager;
 

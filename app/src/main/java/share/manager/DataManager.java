@@ -2,11 +2,14 @@ package share.manager;
 
 import org.json.JSONException;
 
-import share.dataObject.*;
-import share.enumUtils.EnumEnseigne;
-
 import java.util.ArrayList;
-import java.util.List;
+
+import share.dataObject.Magasin;
+import share.dataObject.Manager;
+import share.dataObject.Seller;
+import share.dataObject.User;
+import share.dataObject.Visite;
+import share.enumUtils.EnumEnseigne;
 
 /**
  * Classe qui permet d'exposer les données
@@ -35,24 +38,24 @@ public interface DataManager {
      * --- OBTENTION DES DONNEES PAR GENRE ---
      **/
 
-    List<User> getAllUsers();
+    ArrayList<User> getAllUsers();
 
-    List<Visite> getAllVisites();
+    ArrayList<Visite> getAllVisites();
 
-    List<Magasin> getAllMagasins();
+    ArrayList<Magasin> getAllMagasins();
 
-    List<Manager> getAllManagers();
+    ArrayList<Manager> getAllManagers();
 
-    List<Seller> getAllSellers();
+    ArrayList<Seller> getAllSellers();
 
     /**
      * --- OBTENTION DES DONNEES A PARTIR D'UN ID ---
      **/
 
-    List<Seller> getAllSellersByManager(int idManager);
+    ArrayList<Seller> getAllSellersByManager(int idManager);
 
-    List<Visite> getAllVisiteByUser(int idUser);
+    ArrayList<Visite> getAllVisiteByUser(int idUser);
 
-    List<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne);
+    ArrayList<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne);
 
 }

@@ -1,4 +1,4 @@
-package iia.tristan.persistanceclient.client;
+package client;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 import com.google.android.material.button.MaterialButton;
 
 import iia.tristan.persistanceclient.R;
-import iia.tristan.persistanceclient.client.connection.ConnectionManager;
+import client.connection.ConnectionManager;
 
 public class ChooseAccountActivity extends AppCompatActivity implements View.OnClickListener {
 

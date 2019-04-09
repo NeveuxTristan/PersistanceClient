@@ -1,4 +1,4 @@
-package iia.tristan.persistanceclient.client;
+package client;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 
 import iia.tristan.persistanceclient.R;
-import iia.tristan.persistanceclient.client.connection.ConnectionManager;
+import client.connection.ConnectionManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

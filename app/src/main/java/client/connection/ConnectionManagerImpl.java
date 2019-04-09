@@ -1,4 +1,9 @@
-package iia.tristan.persistanceclient.client.connection;
+package client.connection;
+
+import java.util.ArrayList;
+
+import share.dataObject.User;
+import share.manager.DataManager;
 
 public class ConnectionManagerImpl implements ConnectionManager {
 
@@ -17,13 +22,14 @@ public class ConnectionManagerImpl implements ConnectionManager {
     }
 
     /**
-     * On vérifie l'état des Datas pour savoir si c'est la première connection
+     * On vérifie l'état des Datas pour savoir si c'est la première
+     * Si les utilisateurs existent alors les données sont OK
      */
     private void checkFirstConnection()
     {
-
+        ArrayList<User> users = DataManager.INSTANCE.getAllUsers();
+        isFirstConnection = users != null && !users.isEmpty();
     }
-
 
     @Override
     public boolean getStateFirstConnection()

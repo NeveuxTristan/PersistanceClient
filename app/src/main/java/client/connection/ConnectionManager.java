@@ -1,4 +1,4 @@
-package iia.tristan.persistanceclient.client.connection;
+package client.connection;
 
 public interface ConnectionManager {
 

@@ -2,13 +2,16 @@ package share.manager;
 
 import org.json.JSONException;
 
-import share.dataObject.*;
+import java.util.ArrayList;
+
+import share.dataObject.Magasin;
+import share.dataObject.Manager;
+import share.dataObject.Seller;
+import share.dataObject.User;
+import share.dataObject.Visite;
 import share.enumUtils.EnumEnseigne;
 import share.enumUtils.EnumUser;
 import share.jsonLoader.JsonLoader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class DataManagerImpl implements DataManager {
 
@@ -22,7 +25,8 @@ class DataManagerImpl implements DataManager {
     /**
      * Chargement des données au démarrage
      */
-    DataManagerImpl() {
+    DataManagerImpl()
+    {
 
     }
 
@@ -33,40 +37,49 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public void setMagasins(ArrayList<Magasin> magasins) {
+    public void setMagasins(ArrayList<Magasin> magasins)
+    {
         this.magasins = magasins;
     }
 
     @Override
-    public void setVisites(ArrayList<Visite> visites) {
+    public void setVisites(ArrayList<Visite> visites)
+    {
         this.visites = visites;
     }
 
     @Override
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(ArrayList<User> users)
+    {
         this.users = users;
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public ArrayList<User> getAllUsers()
+    {
         return users;
     }
 
     @Override
-    public List<Visite> getAllVisites() {
+    public ArrayList<Visite> getAllVisites()
+    {
         return visites;
     }
 
     @Override
-    public List<Magasin> getAllMagasins() {
+    public ArrayList<Magasin> getAllMagasins()
+    {
         return magasins;
     }
 
     @Override
-    public List<Manager> getAllManagers() {
+    public ArrayList<Manager> getAllManagers()
+    {
         ArrayList<Manager> managers = new ArrayList<>();
-        for (User u : users) {
-            if (EnumUser.MANAGER.equals(u.getUserType())) {
+        for (User u : users)
+        {
+            if (EnumUser.MANAGER.equals(u.getUserType()))
+            {
                 managers.add((Manager) u);
             }
         }
@@ -74,10 +87,13 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public List<Seller> getAllSellers() {
+    public ArrayList<Seller> getAllSellers()
+    {
         ArrayList<Seller> sellers = new ArrayList<>();
-        for (User u : users) {
-            if (EnumUser.SELLER.equals(u.getUserType())) {
+        for (User u : users)
+        {
+            if (EnumUser.SELLER.equals(u.getUserType()))
+            {
                 sellers.add((Seller) u);
             }
         }
@@ -85,10 +101,13 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public List<Seller> getAllSellersByManager(int idManager) {
+    public ArrayList<Seller> getAllSellersByManager(int idManager)
+    {
         ArrayList<Seller> sellers = new ArrayList<>();
-        for (User u : users) {
-            if (EnumUser.SELLER.equals(u.getUserType()) && ((Seller) u).getIdManager() == idManager) {
+        for (User u : users)
+        {
+            if (EnumUser.SELLER.equals(u.getUserType()) && ((Seller) u).getIdManager() == idManager)
+            {
                 sellers.add((Seller) u);
             }
         }
@@ -96,10 +115,13 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public List<Visite> getAllVisiteByUser(int idUser) {
+    public ArrayList<Visite> getAllVisiteByUser(int idUser)
+    {
         ArrayList<Visite> visitesByUser = new ArrayList<>();
-        for (Visite v : visites) {
-            if (idUser == v.getIdVisitor()) {
+        for (Visite v : visites)
+        {
+            if (idUser == v.getIdVisitor())
+            {
                 visitesByUser.add(v);
             }
         }
@@ -107,10 +129,13 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public List<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne) {
+    public ArrayList<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne)
+    {
         ArrayList<Magasin> magasinsByEnseigne = new ArrayList<>();
-        for (Magasin m : magasins) {
-            if (enumEnseigne.equals(m.getEnseigne())) {
+        for (Magasin m : magasins)
+        {
+            if (enumEnseigne.equals(m.getEnseigne()))
+            {
                 magasinsByEnseigne.add(m);
             }
         }

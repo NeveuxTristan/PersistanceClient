@@ -1,4 +1,4 @@
-package iia.tristan.persistanceclient.client;
+package client;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
