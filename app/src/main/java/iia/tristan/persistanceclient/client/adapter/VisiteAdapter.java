@@ -3,7 +3,7 @@ package iia.tristan.persistanceclient.client.adapter;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
-import iia.tristan.persistanceclient.client.item.VisiteItem;
+import share.dataObject.Visite;
 
 /**
  * @author Neveux_du_Geniebre on 08/04/2019.
@@ -11,9 +11,9 @@ import iia.tristan.persistanceclient.client.item.VisiteItem;
 public class VisiteAdapter extends ArrayAdapter {
 
     private final Context context;
-    private final VisiteItem[] values;
+    private final Visite[] values;
 
-    public VisiteAdapter(Context context, VisiteItem[] values)
+    public VisiteAdapter(Context context, Visite[] values)
     {
         super(context, -1, values);
         this.context = context;

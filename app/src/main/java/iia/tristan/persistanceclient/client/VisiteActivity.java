@@ -8,13 +8,13 @@ import android.widget.ListView;
 
 import iia.tristan.persistanceclient.R;
 import iia.tristan.persistanceclient.client.adapter.VisiteAdapter;
-import iia.tristan.persistanceclient.client.item.VisiteItem;
+import share.dataObject.Visite;
 
 public class VisiteActivity extends AppCompatActivity {
 
     private ListView listVisites;
 
-    private VisiteItem itemSelected;
+    private Visite itemSelected;
     private int idItemSelected = -1;
     private View lastViewSelected = null;
 
@@ -26,7 +26,7 @@ public class VisiteActivity extends AppCompatActivity {
 
         listVisites = findViewById(R.id.list_visite);
 
-        final VisiteItem[] items = null;
+        final Visite[] items = null;
 
         listVisites.setAdapter(new VisiteAdapter(getApplicationContext(), items));
 
