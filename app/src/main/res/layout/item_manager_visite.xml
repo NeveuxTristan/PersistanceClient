@@ -27,7 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="26dip"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/lyt_ic_car"
+        android:layout_toRightOf="@id/lyt_item_visite_manager"
         android:orientation="horizontal"
         android:singleLine="true"
         android:weightSum="4">
@@ -61,7 +61,7 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_above="@id/lyt_scd"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/lyt_ic_car"
+        android:layout_toRightOf="@id/lyt_item_visite_manager"
         android:orientation="horizontal">
 
         <TextView

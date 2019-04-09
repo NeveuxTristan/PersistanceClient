@@ -1,6 +1,7 @@
 package iia.tristan.persistanceclient.client.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,8 @@ public class ManagerVisiteAdapter extends ArrayAdapter implements View.OnClickLi
 
             txtVisiteDate.setText(values[position].getDateVisite());
             txtVisiteName.setText(magasin.getDisplayName());
-            txtVisiteState.setText(values[position].isVisiteDone() ? "VISITE TO DO" : "VISITE DONE");
+            txtVisiteState.setText(values[position].isVisiteDone() ? "Visit TO DO" : "Visit DONE");
+            txtVisiteState.setTextColor(values[position].isVisiteDone() ? Color.RED : Color.GREEN);
         }
 
         return itemView;
