@@ -1,16 +1,15 @@
 package client;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
-import iia.tristan.persistanceclient.R;
+import androidx.appcompat.app.AppCompatActivity;
 import client.connection.ConnectionManager;
+import iia.tristan.persistanceclient.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -62,8 +61,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(menuIntent);
     }
 
-    public AssetManager getAssetManager()
-    {
-        return getAssets();
-    }
 }

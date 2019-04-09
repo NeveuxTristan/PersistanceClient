@@ -142,5 +142,23 @@ class DataManagerImpl implements DataManager {
         return magasinsByEnseigne;
     }
 
+    @Override
+    public void deleteAllVisiteForUserId(int idUser)
+    {
+        ArrayList visitesCopy = (ArrayList) visites.clone();
+        for (Visite v : getAllVisites())
+        {
+            if (v.getIdVisitor() == idUser)
+                visites.remove(v);
+        }
+        saveVisitesToJson();
+    }
+
+    @Override
+    public void saveVisitesToJson()
+    {
+        JsonLoader.INSTANCE.saveAllVisites();
+    }
+
 
 }

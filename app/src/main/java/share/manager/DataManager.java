@@ -58,4 +58,15 @@ public interface DataManager {
 
     ArrayList<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne);
 
+
+    /**
+     * --- SUPPRESSION DE DONNEES ---
+     */
+
+    void deleteAllVisiteForUserId(int idUser);
+
+    /**
+     * --- SAUVEGARDE DES DONNEES ---
+     */
+    void saveVisitesToJson();
 }

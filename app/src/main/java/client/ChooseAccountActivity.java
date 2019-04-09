@@ -2,13 +2,13 @@ package client;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
 
-import iia.tristan.persistanceclient.R;
+import androidx.appcompat.app.AppCompatActivity;
 import client.connection.ConnectionManager;
+import iia.tristan.persistanceclient.R;
 
 public class ChooseAccountActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,7 +17,8 @@ public class ChooseAccountActivity extends AppCompatActivity implements View.OnC
     private MaterialButton btnSeller2;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_account);
 
@@ -31,25 +32,35 @@ public class ChooseAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
-    public void onClick(View v) {
-        if (v == btnManager) {
+    public void onClick(View v)
+    {
+        if (v == btnManager)
+        {
             ConnectionManager.INSTANCE.setUser(true, 1);
             switchToManagerView();
-        } else if (v == btnSeller1) {
-            ConnectionManager.INSTANCE.setUser(false, 2);
-            switchToSellerView();
-        } else if (v == btnSeller2) {
-            ConnectionManager.INSTANCE.setUser(false, 3);
-            switchToSellerView();
         }
+        else
+            if (v == btnSeller1)
+            {
+                ConnectionManager.INSTANCE.setUser(false, 2);
+                switchToSellerView();
+            }
+            else
+                if (v == btnSeller2)
+                {
+                    ConnectionManager.INSTANCE.setUser(false, 3);
+                    switchToSellerView();
+                }
     }
 
-    private void switchToManagerView() {
+    private void switchToManagerView()
+    {
         Intent menuIntent = new Intent(this, ManagerActivity.class);
         startActivity(menuIntent);
     }
 
-    private void switchToSellerView() {
+    private void switchToSellerView()
+    {
         Intent menuIntent = new Intent(this, VisiteActivity.class);
         startActivity(menuIntent);
     }

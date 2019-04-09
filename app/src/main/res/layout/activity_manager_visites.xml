@@ -35,20 +35,22 @@
             android:weightSum="2">
 
             <ImageButton
+                android:id="@+id/bt_manager_visites_add"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:padding="25dp"
-                android:layout_margin="5dp"
-                android:src="@drawable/add"/>
+                android:src="@drawable/add" />
 
             <ImageButton
+                android:id="@+id/bt_manager_visites_delete"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:padding="25dp"
-                android:layout_margin="5dp"
-                android:src="@drawable/garbage"/>
+                android:src="@drawable/garbage" />
 
 
         </LinearLayout>

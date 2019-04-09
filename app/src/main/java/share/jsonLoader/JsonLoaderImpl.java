@@ -4,8 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import client.MainActivity;
@@ -33,9 +37,9 @@ public class JsonLoaderImpl implements JsonLoader {
     @Override
     public void loadAllDatas() throws JSONException
     {
-        loadMagasinInfos(loadJSONFromAsset(MAGASIN_FILE));
-        loadUserInfos(loadJSONFromAsset(USER_FILE));
-        loadVisitesInfos(loadJSONFromAsset(VISITE_FILE));
+        loadMagasinInfos(loadJsonFromLocalStorage(MAGASIN_FILE));
+        loadUserInfos(loadJsonFromLocalStorage(USER_FILE));
+        loadVisitesInfos(loadJsonFromLocalStorage(VISITE_FILE));
     }
 
 
@@ -47,7 +51,46 @@ public class JsonLoaderImpl implements JsonLoader {
     @Override
     public void saveAllVisites()
     {
+        JSONObject json = createJsonFileFromVisite();
+        try
+        {
+            Writer output = null;
+            File file = new File(MainActivity.INSTANCE.getFilesDir(), VISITE_FILE);
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(json.toString());
+            output.close();
 
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    private JSONObject createJsonFileFromVisite()
+    {
+        JSONObject finalJson = new JSONObject();
+        try
+        {
+            JSONArray ja = new JSONArray();
+            JSONObject jo;
+            for (Visite v : DataManager.INSTANCE.getAllVisites())
+            {
+                jo = new JSONObject();
+                jo.put("id", v.getId());
+                jo.put("idMagasin", v.getIdMagasin());
+                jo.put("idVisitor", v.getIdVisitor());
+                jo.put("dateVisite", v.getDateVisite());
+                jo.put("isVisiteDone", v.isVisiteDone());
+                jo.put("comment", v.getComment());
+                ja.put(jo);
+            }
+            finalJson.put("visites", ja);
+
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return finalJson;
     }
 
     @Override
@@ -141,7 +184,7 @@ public class JsonLoaderImpl implements JsonLoader {
 
 //    private String loadFileFromPath(String filePath)
 //    {
-//        File file = new File(loadJSONFromAsset(filePath));
+//        File file = new File(loadJsonFromLocalStorage(filePath));
 //        String output = "";
 //        Scanner sc = null;
 //        try
@@ -156,12 +199,12 @@ public class JsonLoaderImpl implements JsonLoader {
 //        return output;
 //    }
 
-    public String loadJSONFromAsset(String filePath)
+    String loadJsonFromLocalStorage(String filePath)
     {
         String json = null;
         try
         {
-            InputStream is = MainActivity.INSTANCE.getAssetManager().open(filePath);
+            InputStream is = MainActivity.INSTANCE.openFileInput(filePath);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
