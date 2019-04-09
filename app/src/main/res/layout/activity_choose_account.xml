@@ -25,7 +25,7 @@
             android:layout_weight="6"
             android:orientation="vertical">
 
-            <android.support.design.button.MaterialButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_account_manager"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                 app:strokeColor="@color/colorAccent"
                 app:strokeWidth="2dp" />
 
-            <android.support.design.button.MaterialButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_account_seller1"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                 app:strokeColor="@color/colorAccent"
                 app:strokeWidth="2dp" />
 
-            <android.support.design.button.MaterialButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_account_seller2"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
