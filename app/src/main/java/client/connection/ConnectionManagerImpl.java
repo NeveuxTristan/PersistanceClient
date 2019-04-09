@@ -1,8 +1,12 @@
 package client.connection;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import share.dataObject.User;
+import share.enumUtils.EnumClientRequest;
 import share.manager.DataManager;
 
 public class ConnectionManagerImpl implements ConnectionManager {
@@ -14,6 +18,11 @@ public class ConnectionManagerImpl implements ConnectionManager {
     private boolean isManagerAccount;
 
     private int idAccount;
+
+    private Socket socket;
+
+    private static final String HOST = "192.168.43.43";
+    private static final int PORT = 58231;
 
     ConnectionManagerImpl()
     {
@@ -38,9 +47,10 @@ public class ConnectionManagerImpl implements ConnectionManager {
     }
 
     @Override
-    public boolean connect()
+    public void connect()
     {
-        return isConnected;
+        createConnectionClient();
+        isConnected = true;
     }
 
     @Override
@@ -55,4 +65,44 @@ public class ConnectionManagerImpl implements ConnectionManager {
     {
         return idAccount;
     }
+
+    private synchronized void createConnectionClient()
+    {
+        try
+        {
+            this.socket = new Socket(HOST, PORT);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        if (socket != null)
+        {
+            try
+            {
+                connectToServer();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            String input;
+            while (true)
+            {
+                // Com with server
+            }
+        }
+    }
+
+    private void connectToServer() throws IOException
+    {
+        PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
+        if (isFirstConnection)
+            out.println(EnumClientRequest.FIRST_CONNECTION.getId());
+        else
+        {
+            out.println(EnumClientRequest.CONNECTION.getId());
+            out.println(DataManager.INSTANCE.getAllVisites().toString());
+        }
+        out.flush();
+    }
+
 }

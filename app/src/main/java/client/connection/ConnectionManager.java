@@ -6,7 +6,7 @@ public interface ConnectionManager {
 
     boolean getStateFirstConnection();
 
-    boolean connect();
+    void connect();
 
     void setUser(boolean isManager, int id);
 
