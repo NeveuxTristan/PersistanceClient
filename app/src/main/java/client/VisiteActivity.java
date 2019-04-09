@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import iia.tristan.persistanceclient.R;
 import client.adapter.VisiteAdapter;
 import client.connection.ConnectionManager;
+import iia.tristan.persistanceclient.R;
 import share.dataObject.Visite;
 import share.manager.DataManager;
 

@@ -19,7 +19,7 @@
             android:src="@drawable/title_app" />
 
         <ListView
-            android:id="@+id/list_visite"
+            android:id="@+id/list_visite_manager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
