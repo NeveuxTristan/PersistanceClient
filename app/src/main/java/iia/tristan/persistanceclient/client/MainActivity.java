@@ -1,8 +1,9 @@
 package iia.tristan.persistanceclient.client;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,6 +13,8 @@ import iia.tristan.persistanceclient.R;
 import iia.tristan.persistanceclient.client.connection.ConnectionManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static MainActivity INSTANCE;
 
     private MaterialButton buttonStartOnline;
     private MaterialButton buttonStartOffline;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             buttonStartOffline.setEnabled(false);
             Toast.makeText(getApplicationContext(), "This is your first Connection, you must start app online to synchronize datas", Toast.LENGTH_LONG).show();
         }
+        INSTANCE = this;
     }
 
     @Override
@@ -56,5 +60,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Intent menuIntent = new Intent(this, ChooseAccountActivity.class);
         startActivity(menuIntent);
+    }
+
+    public AssetManager getAssetManager()
+    {
+        return getAssets();
     }
 }

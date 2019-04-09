@@ -3,48 +3,59 @@ package share.jsonLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import share.dataObject.*;
-import share.enumUtils.EnumEnseigne;
-import share.enumUtils.EnumUser;
-import share.manager.DataManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import iia.tristan.persistanceclient.client.MainActivity;
+import share.dataObject.Magasin;
+import share.dataObject.Manager;
+import share.dataObject.Seller;
+import share.dataObject.User;
+import share.dataObject.Visite;
+import share.enumUtils.EnumEnseigne;
+import share.enumUtils.EnumUser;
+import share.manager.DataManager;
 
 public class JsonLoaderImpl implements JsonLoader {
 
     /// -- Définition des chemins --- ///
 
-    private final static String ROOT_FOLDER = "C:\\Users\\Tristan\\IdeaProjects\\PersistanceServer\\src\\datas";
-    private final static String MAGASIN_FILE = ROOT_FOLDER + "\\magasin.json";
-    private final static String USER_FILE = ROOT_FOLDER + "\\user.json";
-    private final static String VISITE_FILE = ROOT_FOLDER + "\\visite.json";
+    private final static String MAGASIN_FILE = "magasin.json";
+    private final static String USER_FILE = "user.json";
+    private final static String VISITE_FILE = "visite.json";
 
-    JsonLoaderImpl() {
+    JsonLoaderImpl()
+    {
     }
 
     @Override
     public void loadAllDatas() throws JSONException
     {
-        loadMagasinInfos(loadFileFromPath(MAGASIN_FILE));
-        loadUserInfos(loadFileFromPath(USER_FILE));
-        loadVisitesInfos(loadFileFromPath(VISITE_FILE));
+        loadMagasinInfos(loadJSONFromAsset(MAGASIN_FILE));
+        loadUserInfos(loadJSONFromAsset(USER_FILE));
+        loadVisitesInfos(loadJSONFromAsset(VISITE_FILE));
     }
 
 
     @Override
-    public void saveAllDatas() {
+    public void saveAllDatas()
+    {
     }
 
     @Override
-    public void saveAllVisites() {
+    public void saveAllVisites()
+    {
 
     }
 
     @Override
-    public void updateVisite(int idVisite) {
+    public void updateVisite(int idVisite)
+    {
 
     }
 
@@ -55,7 +66,8 @@ public class JsonLoaderImpl implements JsonLoader {
         JSONObject o;
         ArrayList<Magasin> magasins = new ArrayList<>();
         Magasin m;
-        for (int i = 0; i < arr.length(); i++) {
+        for (int i = 0; i < arr.length(); i++)
+        {
             o = arr.getJSONObject(i);
             m = new Magasin();
             m.setId(o.getInt("id"));
@@ -73,11 +85,13 @@ public class JsonLoaderImpl implements JsonLoader {
         JSONObject o;
         ArrayList<User> users = new ArrayList<>();
         User u;
-        for (int i = 0; i < arr.length(); i++) {
+        for (int i = 0; i < arr.length(); i++)
+        {
             o = arr.getJSONObject(i);
             EnumUser enumUser = EnumUser.getEnumFromString(o.getString("function"));
             if (enumUser != null)
-                switch (enumUser) {
+                switch (enumUser)
+                {
                     case MANAGER:
                         u = new Manager();
                         u.setId(o.getInt("id"));
@@ -106,7 +120,8 @@ public class JsonLoaderImpl implements JsonLoader {
         ArrayList<Visite> visites = new ArrayList<>();
         Visite v;
 
-        for (int i = 0; i < arr.length(); i++) {
+        for (int i = 0; i < arr.length(); i++)
+        {
             o = arr.getJSONObject(i);
             v = new Visite();
             v.setId(o.getInt("id"));
@@ -121,18 +136,40 @@ public class JsonLoaderImpl implements JsonLoader {
         DataManager.INSTANCE.setVisites(visites);
     }
 
-    private String loadFileFromPath(String filePath) {
-        File file = new File(filePath);
-        String output = "";
-        Scanner sc = null;
-        try {
-            sc = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+//    private String loadFileFromPath(String filePath)
+//    {
+//        File file = new File(loadJSONFromAsset(filePath));
+//        String output = "";
+//        Scanner sc = null;
+//        try
+//        {
+//            sc = new Scanner(file);
+//        } catch (FileNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        while (sc != null && sc.hasNextLine())
+//            output = output.concat(sc.nextLine());
+//        return output;
+//    }
+
+    public String loadJSONFromAsset(String filePath)
+    {
+        String json = null;
+        try
+        {
+            InputStream is = MainActivity.INSTANCE.getAssetManager().open(filePath);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
+            return null;
         }
-        while (sc != null && sc.hasNextLine())
-            output = output.concat(sc.nextLine());
-        return output;
+        return json;
     }
 
 }

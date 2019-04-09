@@ -9,4 +9,6 @@ public interface ConnectionManager {
     boolean connect();
 
     void setUser(boolean isManager, int id);
+
+    int getUser();
 }

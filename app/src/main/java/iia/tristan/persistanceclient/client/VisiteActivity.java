@@ -8,7 +8,9 @@ import android.widget.ListView;
 
 import iia.tristan.persistanceclient.R;
 import iia.tristan.persistanceclient.client.adapter.VisiteAdapter;
+import iia.tristan.persistanceclient.client.connection.ConnectionManager;
 import share.dataObject.Visite;
+import share.manager.DataManager;
 
 public class VisiteActivity extends AppCompatActivity {
 
@@ -26,7 +28,7 @@ public class VisiteActivity extends AppCompatActivity {
 
         listVisites = findViewById(R.id.list_visite);
 
-        final Visite[] items = null;
+        final Visite[] items = (Visite[]) DataManager.INSTANCE.getAllVisiteByUser(ConnectionManager.INSTANCE.getUser()).toArray();
 
         listVisites.setAdapter(new VisiteAdapter(getApplicationContext(), items));
 

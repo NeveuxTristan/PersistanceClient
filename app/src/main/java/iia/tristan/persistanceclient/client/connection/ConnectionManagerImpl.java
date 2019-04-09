@@ -10,7 +10,8 @@ public class ConnectionManagerImpl implements ConnectionManager {
 
     private int idAccount;
 
-    ConnectionManagerImpl() {
+    ConnectionManagerImpl()
+    {
         checkFirstConnection();
         this.isConnected = false;
     }
@@ -18,24 +19,34 @@ public class ConnectionManagerImpl implements ConnectionManager {
     /**
      * On vérifie l'état des Datas pour savoir si c'est la première connection
      */
-    private void checkFirstConnection() {
+    private void checkFirstConnection()
+    {
 
     }
 
 
     @Override
-    public boolean getStateFirstConnection() {
+    public boolean getStateFirstConnection()
+    {
         return isFirstConnection;
     }
 
     @Override
-    public boolean connect() {
+    public boolean connect()
+    {
         return isConnected;
     }
 
     @Override
-    public void setUser(boolean isManager, int id) {
+    public void setUser(boolean isManager, int id)
+    {
         this.isManagerAccount = isManager;
         this.idAccount = id;
+    }
+
+    @Override
+    public int getUser()
+    {
+        return idAccount;
     }
 }
