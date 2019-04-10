@@ -80,25 +80,25 @@
             android:padding="10dp"
             android:weightSum="2">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/visite_btn_edit"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/edit"
+                android:padding="5dp"
                 app:backgroundTint="@android:color/transparent"
-                app:cornerRadius="8dp"
-                app:rippleColor="@color/white" />
+                app:cornerRadius="8dp" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/visite_btn_delete"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/delete"
+                android:padding="5dp"
                 app:backgroundTint="@android:color/transparent"
-                app:cornerRadius="8dp"
-                app:rippleColor="@color/white" />
+                app:cornerRadius="8dp" />
 
         </LinearLayout>
 
