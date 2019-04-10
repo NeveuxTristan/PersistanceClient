@@ -28,8 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonStartOffline = findViewById(R.id.menu_btn_offline);
 
         buttonStartOffline.setOnClickListener(this);
+        buttonStartOnline.setOnClickListener(this);
 
-        if (ConnectionManager.INSTANCE.getStateFirstConnection())
+
+        if (!ConnectionManager.INSTANCE.getStateFirstConnection())
         {
             buttonStartOffline.setEnabled(false);
             Toast.makeText(getApplicationContext(), "This is your first Connection, you must start app online to synchronize datas", Toast.LENGTH_LONG).show();

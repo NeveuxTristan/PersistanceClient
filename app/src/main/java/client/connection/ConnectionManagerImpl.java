@@ -2,6 +2,7 @@ package client.connection;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -21,8 +22,8 @@ public class ConnectionManagerImpl implements ConnectionManager {
 
     private Socket socket;
 
-    private static final String HOST = "172.17.11.42";
-    private static final int PORT = 52778;
+    private static final String HOST = "10.0.2.2 ";
+    private static final int PORT = 85421;
 
     ConnectionManagerImpl()
     {
@@ -66,24 +67,16 @@ public class ConnectionManagerImpl implements ConnectionManager {
         return idAccount;
     }
 
-    private synchronized void createConnectionClient()
+    private void createConnectionClient()
     {
         try
         {
-            this.socket = new Socket(HOST, PORT);
+            this.socket = new Socket(InetAddress.getByName(HOST), PORT);
+            connectToServer();
+
         } catch (IOException e)
         {
             e.printStackTrace();
-        }
-        if (socket != null)
-        {
-            try
-            {
-                connectToServer();
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
         }
     }
 
