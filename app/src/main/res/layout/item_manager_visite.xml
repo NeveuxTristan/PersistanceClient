@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="6dip">
 
     <LinearLayout
@@ -84,14 +85,20 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/edit"/>
+                android:src="@drawable/edit"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/white" />
 
             <ImageButton
                 android:id="@+id/visite_btn_delete"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/delete"/>
+                android:src="@drawable/delete"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/white" />
 
         </LinearLayout>
 

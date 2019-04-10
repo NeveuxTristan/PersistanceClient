@@ -21,8 +21,8 @@ public class ConnectionManagerImpl implements ConnectionManager {
 
     private Socket socket;
 
-    private static final String HOST = "192.168.43.43";
-    private static final int PORT = 58231;
+    private static final String HOST = "172.17.11.42";
+    private static final int PORT = 52778;
 
     ConnectionManagerImpl()
     {
@@ -83,11 +83,6 @@ public class ConnectionManagerImpl implements ConnectionManager {
             } catch (IOException e)
             {
                 e.printStackTrace();
-            }
-            String input;
-            while (true)
-            {
-                // Com with server
             }
         }
     }

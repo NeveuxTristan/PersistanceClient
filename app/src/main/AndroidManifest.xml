@@ -17,6 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="client.ManagerVisitesActivity"></activity>
+        <activity android:name="client.ManagerActivity"></activity>
+        <activity android:name="client.ChooseAccountActivity"></activity>
+        <activity android:name="client.VisiteActivity"></activity>
     </application>
 
 </manifest>
