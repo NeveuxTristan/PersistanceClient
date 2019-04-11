@@ -84,7 +84,7 @@
         android:weightSum="6"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.SwitchCompat
+        <Switch
             android:id="@+id/pp_seller_visit_switch_state"
             android:layout_width="0dp"
             android:layout_height="match_parent"
