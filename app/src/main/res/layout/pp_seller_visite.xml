@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:layout_weight="10"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Update visit status"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <DatePicker
+                android:id="@+id/pp_seller_visit_date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:datePickerMode="spinner"
+                android:layout_gravity="center"
+                android:calendarViewShown="false">
+
+            </DatePicker>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:weightSum="4">
+
+            <ImageView
+                android:id="@+id/pp_seller_visit_icon_enseigne"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:padding="10dp"
+                android:src="@drawable/leclerc"/>
+
+            <TextView
+                android:id="@+id/pp_seller_visit_display_ville"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Saint-Berthevin"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:weightSum="6"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/pp_seller_visit_switch_state"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:textOn="OK"
+            android:textOff="NOK"
+            android:thumbTint="#FF0000"
+            android:trackTint="#00FF00"/>
+
+        <EditText
+            android:id="@+id/pp_seller_visit_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:layout_margin="2dp"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="Write comment here"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="2"
+    android:weightSum="2"
+    android:orientation="horizontal">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pp_seller_visit_btn_cancel"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:text="Cancel"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:iconSize="20dp"
+        app:iconGravity="textStart"
+        app:icon="@drawable/cross"
+        app:iconTint="@android:color/secondary_text_light"
+        app:backgroundTint="#60FF0000"
+        app:cornerRadius="8dp"
+        app:rippleColor="@color/white"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pp_seller_visit_btn_create"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:text="update"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:iconGravity="textStart"
+        app:iconTint="@android:color/secondary_text_light"
+        app:iconSize="20dp"
+        app:icon="@drawable/check"
+        app:backgroundTint="#6600FF00"
+        app:cornerRadius="8dp"
+        app:rippleColor="@color/white"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="2dp" />
+
+
+
+</LinearLayout>
+
+
+</LinearLayout>
