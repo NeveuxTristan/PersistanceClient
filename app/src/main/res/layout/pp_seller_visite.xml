@@ -91,10 +91,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:padding="2dp"
-            android:textOn="OK"
-            android:textOff="NOK"
-            android:thumbTint="#FF0000"
-            android:trackTint="#00FF00"/>
+            android:textAlignment="center"/>
 
         <EditText
             android:id="@+id/pp_seller_visit_comment"
