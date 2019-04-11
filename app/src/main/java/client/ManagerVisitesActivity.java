@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import client.adapter.ManagerVisiteAdapter;
 import client.adapter.VisiteAdapter;
 import iia.tristan.persistanceclient.R;
 import share.dataObject.Visite;
@@ -59,9 +60,7 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
         btnDeleteAll.setOnClickListener(this);
         btnAddVisite.setOnClickListener(this);
 
-        final Visite[] items = (Visite[]) DataManager.INSTANCE.getAllVisiteByUser(sellerId).toArray();
-
-        listVisites.setAdapter(new VisiteAdapter(getApplicationContext(), items));
+        listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), DataManager.INSTANCE.getAllVisiteByUser(sellerId)));
 
     }
 
@@ -129,8 +128,9 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String date = sdf.format(calendar.getTime());
+                //TODO create on database new visit for this seller
                 Toast.makeText(getApplicationContext(), "Succesfully create new visite : " + date + " enseigne : " + EnumEnseigne.getEnumFromId(spinnerEnseigne.getSelectedItemPosition()), Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }

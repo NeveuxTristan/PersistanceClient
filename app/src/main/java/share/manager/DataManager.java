@@ -58,6 +58,8 @@ public interface DataManager {
 
     ArrayList<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne);
 
+    Magasin getMagasinById(int id);
+
 
     /**
      * --- SUPPRESSION DE DONNEES ---

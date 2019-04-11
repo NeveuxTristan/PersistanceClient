@@ -143,6 +143,17 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Magasin getMagasinById(int id)
+    {
+        for (Magasin m : magasins)
+        {
+            if (m.getId() == id)
+                return m;
+        }
+        return null;
+    }
+
+    @Override
     public void deleteAllVisiteForUserId(int idUser)
     {
         ArrayList visitesCopy = (ArrayList) visites.clone();
