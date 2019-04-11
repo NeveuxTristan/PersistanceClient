@@ -8,21 +8,40 @@ public enum EnumEnseigne {
 
     private String displayName;
 
-    EnumEnseigne(int id, String displayName) {
+    EnumEnseigne(int id, String displayName)
+    {
         this.id = id;
         this.displayName = displayName;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public String getDisplayName() {
+    public String getDisplayName()
+    {
         return displayName;
     }
 
-    public static EnumEnseigne getEnumFromString(String s) {
-        switch (s) {
+    public static EnumEnseigne getEnumFromId(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                return CARREFOUR;
+            case 1:
+                return LECLERC;
+            case 2:
+                return SUPER_U;
+        }
+        return null;
+    }
+
+    public static EnumEnseigne getEnumFromString(String s)
+    {
+        switch (s)
+        {
             case "CARREFOUR":
                 return CARREFOUR;
             case "LECLERC":

@@ -1,8 +1,9 @@
 package share.dataObject;
 
-import share.enumUtils.EnumEnseigne;
-
 import java.io.Serializable;
+
+import share.enumUtils.EnumEnseigne;
+import share.enumUtils.EnumVille;
 
 /**
  * Classe représentant un magasin dans le système
@@ -22,41 +23,57 @@ public class Magasin implements Serializable {
     /**
      * Ville du magasin
      */
-    private String ville;
+    private int idVille;
 
-    public Magasin() {
+    public Magasin(int id, EnumEnseigne enseigne, int ville)
+    {
+        this.id = id;
+        this.enseigne = enseigne;
+        this.idVille = ville;
     }
 
-    public int getId() {
+    public Magasin()
+    {
+    }
+
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public EnumEnseigne getEnseigne() {
+    public EnumEnseigne getEnseigne()
+    {
         return enseigne;
     }
 
-    public void setEnseigne(EnumEnseigne enseigne) {
+    public void setEnseigne(EnumEnseigne enseigne)
+    {
         this.enseigne = enseigne;
     }
 
-    public String getVille() {
-        return ville;
+    public int getVille()
+    {
+        return idVille;
     }
 
-    public void setVille(String ville) {
-        this.ville = ville;
+    public void setVille(int ville)
+    {
+        this.idVille = ville;
     }
 
-    public String getDisplayName() {
-        return this.enseigne + " " + this.ville;
+    public String getDisplayName()
+    {
+        return this.enseigne + " " + EnumVille.getVilleById(idVille).getDisplayName();
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Magasin[" + this.id + "] " + getDisplayName();
     }
 }

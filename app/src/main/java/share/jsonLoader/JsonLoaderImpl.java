@@ -113,7 +113,7 @@ public class JsonLoaderImpl implements JsonLoader {
             o = arr.getJSONObject(i);
             m = new Magasin();
             m.setId(o.getInt("id"));
-            m.setVille(o.getString("ville"));
+            m.setVille(o.getInt("villeId"));
             m.setEnseigne(EnumEnseigne.getEnumFromString(o.getString("enseigne")));
             magasins.add(m);
         }

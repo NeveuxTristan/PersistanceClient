@@ -1,15 +1,31 @@
 package client;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.button.MaterialButton;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import client.adapter.VisiteAdapter;
 import iia.tristan.persistanceclient.R;
 import share.dataObject.Visite;
+import share.enumUtils.EnumEnseigne;
+import share.enumUtils.EnumVille;
 import share.manager.DataManager;
 
 /**
@@ -23,17 +39,16 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
     private ImageButton btnAddVisite;
     private ImageButton btnDeleteAll;
 
-    private int sellerId;
+    private Dialog dialog;
 
-    private Visite itemSelected;
-    private int idItemSelected = -1;
-    private View lastViewSelected = null;
+    private int sellerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_visites);
+        dialog = new Dialog(this);
 
         sellerId = savedInstanceState.getInt(SELLER_ID);
 
@@ -47,18 +62,6 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
         final Visite[] items = (Visite[]) DataManager.INSTANCE.getAllVisiteByUser(sellerId).toArray();
 
         listVisites.setAdapter(new VisiteAdapter(getApplicationContext(), items));
-
-        listVisites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                selectItem(view, position);
-            }
-        });
-    }
-
-    private void selectItem(View view, int position)
-    {
 
     }
 
@@ -77,7 +80,99 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
         else
             if (view == btnAddVisite)
             {
+                showPp();
+            }
+    }
+
+    private void showPp()
+    {
+        // Composant de la pp //
+        TextView txtclose;
+        final MaterialButton btnCreate, btnCancel;
+        final Spinner spinnerEnseigne, spinnerVille;
+        final ImageView imageEnseigne;
+        final TextView textVille;
+        final DatePicker datePicker;
+
+        dialog.setContentView(R.layout.pp_create_visite);
+        btnCreate = dialog.findViewById(R.id.pp_create_visit_btn_create);
+        btnCancel = dialog.findViewById(R.id.pp_create_visit_btn_cancel);
+        spinnerVille = dialog.findViewById(R.id.pp_create_visit_select_ville);
+        spinnerEnseigne = dialog.findViewById(R.id.pp_create_visit_select_enseigne);
+        imageEnseigne = dialog.findViewById(R.id.pp_create_visit_icon_enseigne);
+        textVille = dialog.findViewById(R.id.pp_create_visit_display_ville);
+        datePicker = dialog.findViewById(R.id.pp_create_visit_date_picker);
+
+        // Inaccessible par défaut
+        spinnerEnseigne.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner, R.id.item_spinner_text, EnumEnseigne.values()));
+        spinnerVille.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner_magasin, R.id.item_spinner_magasin_text, EnumVille.values()));
+
+        datePicker.setMinDate(System.currentTimeMillis() - 1000);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                int day = datePicker.getDayOfMonth();
+                int month = datePicker.getMonth();
+                int year = datePicker.getYear();
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String date = sdf.format(calendar.getTime());
+                Toast.makeText(getApplicationContext(), "Succesfully create new visite : " + date + " enseigne : " + EnumEnseigne.getEnumFromId(spinnerEnseigne.getSelectedItemPosition()), Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+
+        spinnerEnseigne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                EnumEnseigne enumEnseigne = EnumEnseigne.getEnumFromId(position);
+
+                imageEnseigne.setImageResource(
+                        EnumEnseigne.CARREFOUR.equals(enumEnseigne) ? R.drawable.carrefour :
+                                EnumEnseigne.LECLERC.equals(enumEnseigne) ? R.drawable.leclerc : R.drawable.super_u);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+
+        });
+
+        spinnerVille.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                // Magasin m = ((ItemSpinnerMagasinAdapter) parent.getAdapter()).getMagasin();
+                // textVille.setText(m.getVille());
+                textVille.setText(spinnerVille.getSelectedItem().toString());
+                btnCreate.setEnabled(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
 
             }
+        });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 }
