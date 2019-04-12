@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:padding="30dp"
-                android:text="SELLER - NEVEUX T."
+                android:text="COMMERCIAL - NEVEUX T."
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:padding="30dp"
-                android:text="SELLER - DOP K."
+                android:text="COMMERCIAL - DOP K."
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Please sellect the seller you want to manage"
+            android:text="Please sellect the commercial you want to manage"
             android:textAlignment="center"
             android:textSize="20sp" />
 
