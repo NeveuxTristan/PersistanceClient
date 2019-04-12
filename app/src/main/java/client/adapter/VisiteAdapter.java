@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -32,7 +30,7 @@ import share.manager.DataManager;
 /**
  * @author Neveux_du_Geniebre on 08/04/2019.
  */
-public class VisiteAdapter extends ArrayAdapter implements View.OnClickListener {
+public class VisiteAdapter extends ArrayAdapter {
 
     private final Context context;
     private final ArrayList<Visite> values;
@@ -47,8 +45,6 @@ public class VisiteAdapter extends ArrayAdapter implements View.OnClickListener 
         this.dialog = new Dialog(context);
     }
 
-    private ImageButton btnDetails;
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
@@ -59,10 +55,8 @@ public class VisiteAdapter extends ArrayAdapter implements View.OnClickListener 
         TextView txtVisiteDate = itemView.findViewById(R.id.visite_item_date);
         TextView txtVisiteName = itemView.findViewById(R.id.visite_item_name);
         TextView txtVisiteState = itemView.findViewById(R.id.visite_item_state);
-        ImageButton btnDetails = itemView.findViewById(R.id.visite_item_btn_details);
+        TextView txtComment = itemView.findViewById(R.id.visite_item_comment);
         ImageView visiteIco = itemView.findViewById(R.id.icVisiteItem);
-
-        btnDetails.setOnClickListener(this);
 
         int idMagasin = values.get(position).getIdMagasin();
         Magasin magasin = null;
@@ -82,20 +76,15 @@ public class VisiteAdapter extends ArrayAdapter implements View.OnClickListener 
 
             txtVisiteDate.setText(values.get(position).getDateVisite());
             txtVisiteName.setText(magasin.getDisplayName());
-            txtVisiteState.setText(values.get(position).isVisiteDone() ? "Visit TO DO" : "Visit DONE");
-            txtVisiteState.setTextColor(values.get(position).isVisiteDone() ? Color.RED : Color.GREEN);
+            txtVisiteState.setText(values.get(position).isVisiteDone() ? "Visit DONE" : "Visit TO DO");
+            txtVisiteState.setTextColor(values.get(position).isVisiteDone() ? Color.GREEN : Color.RED);
+            String comment = values.get(position).getComment();
+            comment = comment.length() > 30 ? comment.substring(0, 28) + "..." : comment;
+            txtComment.setText(comment);
+
         }
 
         return itemView;
-    }
-
-    @Override
-    public void onClick(View view)
-    {
-        if (view == btnDetails)
-        {
-            showPpSellerVisite(values.get(((ListView) view.getParent()).getPositionForView(view)));
-        }
     }
 
     private void showPpSellerVisite(final Visite visite)
