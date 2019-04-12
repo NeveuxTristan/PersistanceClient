@@ -18,11 +18,14 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import client.adapter.ManagerVisiteAdapter;
 import iia.tristan.persistanceclient.R;
+import share.dataObject.Magasin;
+import share.dataObject.Visite;
 import share.enumUtils.EnumEnseigne;
 import share.enumUtils.EnumVille;
 import share.manager.DataManager;
@@ -37,6 +40,11 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
     private ListView listVisites;
     private ImageButton btnAddVisite;
     private ImageButton btnDeleteAll;
+
+    private ArrayList<Visite> visitesDisplay;
+    private View itemSelected;
+    private Visite visiteSelected;
+    private int posVisiteSelected;
 
     private Dialog dialog;
 
@@ -59,7 +67,19 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
         btnDeleteAll.setOnClickListener(this);
         btnAddVisite.setOnClickListener(this);
 
-        listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), DataManager.INSTANCE.getAllVisiteByUser(sellerId)));
+        visitesDisplay = DataManager.INSTANCE.getAllVisiteByUser(sellerId);
+        listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
+
+        listVisites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                posVisiteSelected = position;
+                visiteSelected = visitesDisplay.get(position);
+                itemSelected = view;
+                showEditPp(visiteSelected);
+            }
+        });
 
     }
 
@@ -71,7 +91,8 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
             if (!listVisites.getAdapter().isEmpty())
             {
                 DataManager.INSTANCE.deleteAllVisiteForUserId(sellerId);
-                listVisites.removeAllViews();
+                visitesDisplay.clear();
+                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
                 listVisites.invalidate();
             }
         }
@@ -80,6 +101,124 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
             {
                 showPp();
             }
+    }
+
+    /**
+     * Popup de création avec les valeurs initiales déjà set
+     *
+     * @param visite visite initiale
+     */
+    private void showEditPp(final Visite visite)
+    {
+        // Composant de la pp //
+        TextView txtclose;
+        final MaterialButton btnUpdate, btnDelete;
+        final Spinner spinnerEnseigne, spinnerVille;
+        final ImageView imageEnseigne;
+        final TextView textVille, txtTitle;
+        final DatePicker datePicker;
+
+        dialog.setContentView(R.layout.pp_create_visite);
+        btnUpdate = dialog.findViewById(R.id.pp_create_visit_btn_create);
+        btnDelete = dialog.findViewById(R.id.pp_create_visit_btn_cancel);
+        spinnerVille = dialog.findViewById(R.id.pp_create_visit_select_ville);
+        spinnerEnseigne = dialog.findViewById(R.id.pp_create_visit_select_enseigne);
+        imageEnseigne = dialog.findViewById(R.id.pp_create_visit_icon_enseigne);
+        textVille = dialog.findViewById(R.id.pp_create_visit_display_ville);
+        txtTitle = dialog.findViewById(R.id.pp_create_visit_txt_title);
+        datePicker = dialog.findViewById(R.id.pp_create_visit_date_picker);
+        txtTitle.setText("Update Visit");
+        btnUpdate.setText("Update");
+        btnDelete.setText("Delete");
+
+        Magasin magasin = DataManager.INSTANCE.getMagasinById(visite.getIdMagasin());
+
+        spinnerEnseigne.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner, R.id.item_spinner_text, EnumEnseigne.values()));
+        spinnerVille.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner_magasin, R.id.item_spinner_magasin_text, EnumVille.values()));
+        spinnerEnseigne.setSelection(magasin.getEnseigne().getId());
+        spinnerVille.setSelection(magasin.getVille());
+        String[] dateFormat = visite.getDateVisite().split("/");
+        datePicker.updateDate(Integer.valueOf(dateFormat[2]), Integer.valueOf(dateFormat[1]), Integer.valueOf(dateFormat[0]));
+
+        datePicker.setMinDate(System.currentTimeMillis() - 1000);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                DataManager.INSTANCE.deleteVisiteById(visiteSelected.getId());
+                visitesDisplay.remove(posVisiteSelected);
+                visiteSelected = null;
+                listVisites.removeViewInLayout(itemSelected);
+                itemSelected = null;
+                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
+                listVisites.invalidate();
+                dialog.dismiss();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                int day = datePicker.getDayOfMonth();
+                int month = datePicker.getMonth();
+                int year = datePicker.getYear();
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String date = sdf.format(calendar.getTime());
+                visiteSelected.setDateVisite(date);
+                visiteSelected.setIdMagasin(DataManager.INSTANCE.getMagasinByEnseigneAndCity(
+                        EnumEnseigne.getEnumFromId(spinnerEnseigne.getSelectedItemPosition()), spinnerVille.getSelectedItemPosition()).getId());
+                visitesDisplay.set(posVisiteSelected, visiteSelected);
+                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
+                listVisites.invalidate();
+                DataManager.INSTANCE.saveVisite(visiteSelected);
+                Toast.makeText(getApplicationContext(), "Succesfully edit visite date = " + date, Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+
+        spinnerEnseigne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                EnumEnseigne enumEnseigne = EnumEnseigne.getEnumFromId(position);
+
+                imageEnseigne.setImageResource(
+                        EnumEnseigne.CARREFOUR.equals(enumEnseigne) ? R.drawable.carrefour :
+                                EnumEnseigne.LECLERC.equals(enumEnseigne) ? R.drawable.leclerc : R.drawable.super_u);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+
+        });
+
+        spinnerVille.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                textVille.setText(spinnerVille.getSelectedItem().toString());
+                btnUpdate.setEnabled(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 
     private void showPp()
@@ -126,11 +265,18 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String date = sdf.format(calendar.getTime());
-                //TODO create on database new visit for this seller
-                Toast.makeText(getApplicationContext(), "Succesfully create new visite : " + date + " enseigne : " + EnumEnseigne.getEnumFromId(spinnerEnseigne.getSelectedItemPosition()), Toast.LENGTH_LONG).show();
+
+                Visite newVisite = DataManager.INSTANCE.addVisite(sellerId,
+                        DataManager.INSTANCE.getMagasinByEnseigneAndCity(
+                                EnumEnseigne.getEnumFromId(spinnerEnseigne.getSelectedItemPosition()), spinnerVille.getSelectedItemPosition()).getId(),
+                        date);
+
+                visitesDisplay.add(newVisite);
+                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
+
+                Toast.makeText(getApplicationContext(), "Succesfully create new visite : " + DataManager.INSTANCE.getMagasinById(newVisite.getIdMagasin()).getDisplayName() + " " + date + ".", Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });

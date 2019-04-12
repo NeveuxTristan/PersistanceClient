@@ -1,5 +1,7 @@
 package share.manager;
 
+import android.util.Log;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -27,13 +29,71 @@ class DataManagerImpl implements DataManager {
      */
     DataManagerImpl()
     {
+        users = new ArrayList<>();
+        magasins = new ArrayList<>();
+        visites = new ArrayList<>();
+        Manager m = new Manager();
+        m.setFirstName("Jeremy");
+        m.setId(1);
+        m.setName("PERROUAULT");
+        users.add(m);
+        Seller s = new Seller();
+        s.setFirstName("Tristan");
+        s.setId(2);
+        s.setName("NEVEUX");
+        users.add(s);
+        s = new Seller();
+        s.setFirstName("kay");
+        s.setId(3);
+        s.setName("DOP");
+        users.add(s);
+
+        magasins.add(new Magasin(1, EnumEnseigne.SUPER_U, 0));
+        magasins.add(new Magasin(2, EnumEnseigne.SUPER_U, 1));
+        magasins.add(new Magasin(3, EnumEnseigne.SUPER_U, 2));
+        magasins.add(new Magasin(4, EnumEnseigne.SUPER_U, 3));
+        magasins.add(new Magasin(5, EnumEnseigne.SUPER_U, 4));
+        magasins.add(new Magasin(6, EnumEnseigne.SUPER_U, 5));
+        magasins.add(new Magasin(7, EnumEnseigne.SUPER_U, 6));
+        magasins.add(new Magasin(8, EnumEnseigne.SUPER_U, 7));
+        magasins.add(new Magasin(9, EnumEnseigne.SUPER_U, 8));
+        magasins.add(new Magasin(10, EnumEnseigne.SUPER_U, 9));
+        magasins.add(new Magasin(11, EnumEnseigne.LECLERC, 0));
+        magasins.add(new Magasin(12, EnumEnseigne.LECLERC, 1));
+        magasins.add(new Magasin(13, EnumEnseigne.LECLERC, 2));
+        magasins.add(new Magasin(14, EnumEnseigne.LECLERC, 3));
+        magasins.add(new Magasin(15, EnumEnseigne.LECLERC, 4));
+        magasins.add(new Magasin(16, EnumEnseigne.LECLERC, 5));
+        magasins.add(new Magasin(17, EnumEnseigne.LECLERC, 6));
+        magasins.add(new Magasin(18, EnumEnseigne.LECLERC, 7));
+        magasins.add(new Magasin(19, EnumEnseigne.LECLERC, 8));
+        magasins.add(new Magasin(20, EnumEnseigne.LECLERC, 9));
+        magasins.add(new Magasin(21, EnumEnseigne.CARREFOUR, 0));
+        magasins.add(new Magasin(22, EnumEnseigne.CARREFOUR, 1));
+        magasins.add(new Magasin(23, EnumEnseigne.CARREFOUR, 2));
+        magasins.add(new Magasin(24, EnumEnseigne.CARREFOUR, 3));
+        magasins.add(new Magasin(25, EnumEnseigne.CARREFOUR, 4));
+        magasins.add(new Magasin(26, EnumEnseigne.CARREFOUR, 5));
+        magasins.add(new Magasin(27, EnumEnseigne.CARREFOUR, 6));
+        magasins.add(new Magasin(28, EnumEnseigne.CARREFOUR, 7));
+        magasins.add(new Magasin(29, EnumEnseigne.CARREFOUR, 8));
+        magasins.add(new Magasin(30, EnumEnseigne.CARREFOUR, 9));
+
+        visites.add(new Visite(17, 3, "04/05/2019", true, "Etat parfait"));
+        visites.add(new Visite(14, 2, "08/05/2019", true, "Bien, gestion des boissons fraiches à retravailler"));
+        visites.add(new Visite(28, 2, "11/05/2019", true, "Désastreux. Conseil sanitaire saisi."));
+        visites.add(new Visite(1, 2, "14/05/2019", false, ""));
+        visites.add(new Visite(24, 3, "16/05/2019", false, ""));
+        visites.add(new Visite(6, 2, "17/05/2019", false, ""));
+        visites.add(new Visite(12, 2, "24/05/2019", false, ""));
+        visites.add(new Visite(23, 3, "24/05/2019", false, ""));
 
     }
 
     @Override
     public void loadDatas() throws JSONException
     {
-        JsonLoader.INSTANCE.loadAllDatas();
+        // JsonLoader.INSTANCE.loadAllDatas();
     }
 
     @Override
@@ -154,10 +214,22 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public Magasin getMagasinByEnseigneAndCity(EnumEnseigne enseigne, int idCity)
+    {
+        Log.d("enseigne = " + enseigne + " idCity = " + idCity, "enseigne = " + enseigne + " idCity = " + idCity);
+        for (Magasin m : magasins)
+        {
+            if (m.getEnseigne().equals(enseigne) && m.getVille() == idCity)
+                return m;
+        }
+        return null;
+    }
+
+    @Override
     public void deleteAllVisiteForUserId(int idUser)
     {
-        ArrayList visitesCopy = (ArrayList) visites.clone();
-        for (Visite v : getAllVisites())
+        ArrayList<Visite> visitesCopy = (ArrayList<Visite>) visites.clone();
+        for (Visite v : visitesCopy)
         {
             if (v.getIdVisitor() == idUser)
                 visites.remove(v);
@@ -166,9 +238,58 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public void deleteVisiteById(int id)
+    {
+        ArrayList<Visite> visitesCopy = (ArrayList<Visite>) visites.clone();
+        boolean deleteOk = false;
+        int position = 0;
+        for (Visite v : visitesCopy)
+        {
+            if (v.getId() == id)
+            {
+                visites.remove(position);
+                deleteOk = true;
+                break;
+            }
+            position++;
+        }
+        if (deleteOk)
+            saveVisitesToJson();
+    }
+
+    @Override
     public void saveVisitesToJson()
     {
         JsonLoader.INSTANCE.saveAllVisites();
+    }
+
+    @Override
+    public void saveVisite(Visite visiteToSave)
+    {
+        ArrayList<Visite> visitesCopy = (ArrayList<Visite>) visites.clone();
+        boolean saveOk = false;
+        int position = 0;
+        for (Visite v : visitesCopy)
+        {
+            if (v.getId() == visiteToSave.getId())
+            {
+                visites.set(position, visiteToSave);
+                saveOk = true;
+                break;
+            }
+            position++;
+        }
+        if (saveOk)
+            saveVisitesToJson();
+    }
+
+    @Override
+    public Visite addVisite(int idSeller, int idMagasin, String date)
+    {
+        Visite v = new Visite(idMagasin, idSeller, date, false, "");
+        visites.add(v);
+        saveVisitesToJson();
+        return v;
     }
 
 

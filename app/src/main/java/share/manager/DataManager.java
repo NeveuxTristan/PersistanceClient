@@ -60,6 +60,8 @@ public interface DataManager {
 
     Magasin getMagasinById(int id);
 
+    Magasin getMagasinByEnseigneAndCity(EnumEnseigne enseigne, int idCity);
+
 
     /**
      * --- SUPPRESSION DE DONNEES ---
@@ -67,8 +69,14 @@ public interface DataManager {
 
     void deleteAllVisiteForUserId(int idUser);
 
+    void deleteVisiteById(int id);
+
     /**
      * --- SAUVEGARDE DES DONNEES ---
      */
     void saveVisitesToJson();
+
+    void saveVisite(Visite visiteToSave);
+
+    Visite addVisite(int idSeller, int idMagasin, String date);
 }
