@@ -75,6 +75,9 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
         visitesDisplay = DataManager.INSTANCE.getAllVisiteByUser(sellerId);
         listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
 
+        TextView empty = findViewById(R.id.activity_manager_visite_txt_empty);
+        listVisites.setEmptyView(empty);
+
         listVisites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)

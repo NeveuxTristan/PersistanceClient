@@ -26,7 +26,20 @@
             android:layout_weight="5"
             android:orientation="vertical">
 
+
         </ListView>
+
+
+        <TextView
+            android:id="@+id/activity_manager_visite_txt_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="5"
+            android:textAlignment="center"
+            android:text="No visit to display. Try to create one."
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"

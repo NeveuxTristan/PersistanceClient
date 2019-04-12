@@ -28,6 +28,17 @@
         </ListView>
 
         <TextView
+            android:id="@+id/activity_visite_txt_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            android:textAlignment="center"
+            android:text="No visit registered for you. Ask to your manager if tou want some work."
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

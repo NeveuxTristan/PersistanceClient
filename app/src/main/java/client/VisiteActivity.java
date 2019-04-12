@@ -48,6 +48,9 @@ public class VisiteActivity extends AppCompatActivity {
         visitesDisplay = DataManager.INSTANCE.getAllVisiteByUser(ConnectionManager.INSTANCE.getUser());
         listVisites.setAdapter(new VisiteAdapter(getApplicationContext(), visitesDisplay));
 
+        TextView empty = findViewById(R.id.activity_visite_txt_empty);
+        listVisites.setEmptyView(empty);
+
         listVisites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
