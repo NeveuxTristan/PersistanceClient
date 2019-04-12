@@ -22,9 +22,7 @@ import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import client.adapter.ManagerVisiteAdapter;
-import client.adapter.VisiteAdapter;
 import iia.tristan.persistanceclient.R;
-import share.dataObject.Visite;
 import share.enumUtils.EnumEnseigne;
 import share.enumUtils.EnumVille;
 import share.manager.DataManager;
@@ -51,7 +49,8 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_manager_visites);
         dialog = new Dialog(this);
 
-        sellerId = savedInstanceState.getInt(SELLER_ID);
+        Bundle extras = getIntent().getExtras();
+        sellerId = extras.getInt(SELLER_ID);
 
         listVisites = findViewById(R.id.list_visite_manager);
         btnAddVisite = findViewById(R.id.bt_manager_visites_add);

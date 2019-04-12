@@ -62,8 +62,8 @@ public class ManagerVisiteAdapter extends ArrayAdapter implements View.OnClickLi
         TextView txtVisiteDate = itemView.findViewById(R.id.visite_date);
         TextView txtVisiteName = itemView.findViewById(R.id.visite_name);
         TextView txtVisiteState = itemView.findViewById(R.id.visite_state);
-        ImageButton btnEdit = itemView.findViewById(R.id.visite_btn_edit);
-        ImageButton btnDelete = itemView.findViewById(R.id.visite_btn_delete);
+        ImageView btnEdit = itemView.findViewById(R.id.visite_btn_edit);
+        ImageView btnDelete = itemView.findViewById(R.id.visite_btn_delete);
         ImageView visiteIco = itemView.findViewById(R.id.iconVisiteItem);
 
         btnEdit.setOnClickListener(this);
@@ -87,8 +87,8 @@ public class ManagerVisiteAdapter extends ArrayAdapter implements View.OnClickLi
 
             txtVisiteDate.setText(values.get(position).getDateVisite());
             txtVisiteName.setText(magasin.getDisplayName());
-            txtVisiteState.setText(values.get(position).isVisiteDone() ? "Visit TO DO" : "Visit DONE");
-            txtVisiteState.setTextColor(values.get(position).isVisiteDone() ? Color.RED : Color.GREEN);
+            txtVisiteState.setText(values.get(position).isVisiteDone() ? "Visit DONE" : "Visit TO DO");
+            txtVisiteState.setTextColor(values.get(position).isVisiteDone() ? Color.GREEN : Color.RED);
         }
 
         return itemView;

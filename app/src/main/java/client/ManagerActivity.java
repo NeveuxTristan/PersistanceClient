@@ -50,6 +50,7 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
         Bundle bundle = new Bundle();
         bundle.putInt(ManagerVisitesActivity.SELLER_ID, id);
         Intent menuIntent = new Intent(this, ManagerVisitesActivity.class);
+        menuIntent.putExtras(bundle);
         startActivity(menuIntent, bundle);
     }
 

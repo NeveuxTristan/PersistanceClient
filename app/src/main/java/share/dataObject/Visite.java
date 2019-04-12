@@ -47,16 +47,8 @@ public class Visite implements Serializable {
     public Visite() {
     }
 
-    public Visite(int id, int idMagasin, int idVisitor, String dateVisite, boolean isVisiteDone, String comment) {
-        this.id = AUTO_ID++;
-        this.idMagasin = idMagasin;
-        this.idVisitor = idVisitor;
-        this.dateVisite = dateVisite;
-        this.isVisiteDone = isVisiteDone;
-        this.comment = comment;
-    }
-
     public Visite(int idMagasin, int idVisitor, String dateVisite, boolean isVisiteDone, String comment) {
+        this.id = AUTO_ID++;
         this.idMagasin = idMagasin;
         this.idVisitor = idVisitor;
         this.dateVisite = dateVisite;
