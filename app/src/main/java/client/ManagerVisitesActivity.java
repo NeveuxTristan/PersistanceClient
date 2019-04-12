@@ -1,6 +1,9 @@
 package client;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -50,6 +53,8 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
 
     private int sellerId;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -80,7 +85,7 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
                 showEditPp(visiteSelected);
             }
         });
-
+        context = this;
     }
 
     @Override
@@ -90,10 +95,25 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
         {
             if (!listVisites.getAdapter().isEmpty())
             {
-                DataManager.INSTANCE.deleteAllVisiteForUserId(sellerId);
-                visitesDisplay.clear();
-                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
-                listVisites.invalidate();
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete All")
+                        .setMessage("Are you sure you want to delete all visits?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                DataManager.INSTANCE.deleteAllVisiteForUserId(sellerId);
+                                visitesDisplay.clear();
+                                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
+                                listVisites.invalidate();
+                            }
+                        })
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         }
         else
@@ -146,14 +166,31 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
             @Override
             public void onClick(View v)
             {
-                DataManager.INSTANCE.deleteVisiteById(visiteSelected.getId());
-                visitesDisplay.remove(posVisiteSelected);
-                visiteSelected = null;
-                listVisites.removeViewInLayout(itemSelected);
-                itemSelected = null;
-                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
-                listVisites.invalidate();
-                dialog.dismiss();
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Visit")
+                        .setMessage("Are you sure you want to delete this visit?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface d, int which)
+                            {
+                                DataManager.INSTANCE.deleteVisiteById(visiteSelected.getId());
+                                visitesDisplay.remove(posVisiteSelected);
+                                visiteSelected = null;
+                                listVisites.removeViewInLayout(itemSelected);
+                                itemSelected = null;
+                                listVisites.setAdapter(new ManagerVisiteAdapter(getApplicationContext(), visitesDisplay));
+                                listVisites.invalidate();
+                                dialog.dismiss();
+                            }
+                        })
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
             }
         });
 
