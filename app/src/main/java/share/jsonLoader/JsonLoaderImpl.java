@@ -51,19 +51,20 @@ public class JsonLoaderImpl implements JsonLoader {
     @Override
     public void saveAllVisites()
     {
-        JSONObject json = createJsonFileFromVisite();
-        try
-        {
-            Writer output = null;
-            File file = new File(MainActivity.INSTANCE.getFilesDir(), VISITE_FILE);
-            output = new BufferedWriter(new FileWriter(file));
-            output.write(json.toString());
-            output.close();
-
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
+        return;
+//        JSONObject json = createJsonFileFromVisite();
+//        try
+//        {
+//            Writer output = null;
+//            File file = new File(MainActivity.INSTANCE.getFilesDir(), VISITE_FILE);
+//            output = new BufferedWriter(new FileWriter(file));
+//            output.write(json.toString());
+//            output.close();
+//
+//        } catch (IOException ex)
+//        {
+//            ex.printStackTrace();
+//        }
     }
 
     private JSONObject createJsonFileFromVisite()

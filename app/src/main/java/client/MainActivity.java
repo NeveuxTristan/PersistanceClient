@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         if (v == buttonStartOnline)
         {
-            ConnectionManager.INSTANCE.connect();
+//            ConnectionManager.INSTANCE.connect();
             switchToChooseAccountPage();
         }
         else
