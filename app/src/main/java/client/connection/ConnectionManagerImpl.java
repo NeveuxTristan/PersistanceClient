@@ -22,8 +22,8 @@ public class ConnectionManagerImpl implements ConnectionManager {
 
     private Socket socket;
 
-    private static final String HOST = "10.0.2.2 ";
-    private static final int PORT = 85421;
+    private static final String HOST = "192.168.43.43 ";
+    private static final int PORT = 22522;
 
     ConnectionManagerImpl()
     {
