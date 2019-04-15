@@ -68,7 +68,7 @@ public class Magasin implements Serializable {
 
     public String getDisplayName()
     {
-        return this.enseigne + " " + EnumVille.getVilleById(idVille).getDisplayName();
+        return this.enseigne.getDisplayName() + " " + EnumVille.getVilleById(idVille).getDisplayName();
     }
 
     @Override
