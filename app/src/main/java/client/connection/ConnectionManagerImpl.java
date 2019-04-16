@@ -26,6 +26,8 @@ import share.manager.DataManager;
 
 public class ConnectionManagerImpl implements ConnectionManager {
 
+    private static final String IP_ADRESS = "192.168.43.43:80";
+
     private boolean isFirstConnection;
 
     private boolean isConnected;
@@ -77,10 +79,10 @@ public class ConnectionManagerImpl implements ConnectionManager {
     }
 
     private void createConnectionClient() {
-        Log.d("First connection = " + isFirstConnection, "");
-        if (!isFirstConnection)
+        if (!isFirstConnection) {
             connectAndGetAllDatas();
-        else
+            isFirstConnection = true;
+        } else
             connectAndSyncDatas();
     }
 
@@ -89,7 +91,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.43.43:80/persistance/sendAll.php");
+                    URL url = new URL("http://" + IP_ADRESS + "/persistance/sendAll.php");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -176,10 +178,6 @@ public class ConnectionManagerImpl implements ConnectionManager {
             visitesFromServer.add(v);
         }
 
-        Log.d("MAGASINS : ", magasinsFromServer.toString());
-        Log.d("USERS : ", usersFromServer.toString());
-
-
         DataManager.INSTANCE.setMagasins(magasinsFromServer);
         DataManager.INSTANCE.setUsers(usersFromServer);
         DataManager.INSTANCE.setVisites(visitesFromServer);
@@ -192,7 +190,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.43.43:80/persistance/sendVisites.php");
+                    URL url = new URL("http://" + IP_ADRESS + "/persistance/sendVisites.php");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -255,7 +253,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.43.43:80/persistance/saveVisite.php");
+                    URL url = new URL("http://" + IP_ADRESS + "/persistance/saveVisite.php");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("PUT");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
