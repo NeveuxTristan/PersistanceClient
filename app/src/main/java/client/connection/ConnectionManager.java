@@ -8,7 +8,13 @@ public interface ConnectionManager {
 
     void connect();
 
+    void connectAndSyncDatas();
+
+    void disconnect();
+
     void setUser(boolean isManager, int id);
 
     int getUser();
+
+    boolean isConnected();
 }

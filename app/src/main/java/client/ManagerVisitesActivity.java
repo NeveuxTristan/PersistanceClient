@@ -310,7 +310,8 @@ public class ManagerVisitesActivity extends AppCompatActivity implements View.On
 
                 Visite newVisite = DataManager.INSTANCE.addVisite(sellerId,
                         DataManager.INSTANCE.getMagasinByEnseigneAndCity(
-                                EnumEnseigne.getEnumFromId(spinnerEnseigne.getSelectedItemPosition()), spinnerVille.getSelectedItemPosition()).getId(),
+                                EnumEnseigne.getEnumFromId(spinnerEnseigne.getSelectedItemPosition()),
+                                spinnerVille.getSelectedItemPosition()).getId(),
                         date);
 
                 visitesDisplay.add(newVisite);

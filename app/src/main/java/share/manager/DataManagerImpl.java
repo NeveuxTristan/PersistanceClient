@@ -5,7 +5,9 @@ import android.util.Log;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import client.connection.ConnectionManager;
 import share.dataObject.Magasin;
 import share.dataObject.Manager;
 import share.dataObject.Seller;
@@ -20,15 +22,20 @@ class DataManagerImpl implements DataManager {
     /**
      * Liste des utilisateurs
      */
-    private ArrayList<User> users;
-    private ArrayList<Magasin> magasins;
-    private ArrayList<Visite> visites;
+    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Magasin> magasins = new ArrayList<>();
+    private ArrayList<Visite> visites = new ArrayList<>();
+
+    private ArrayList<Visite> visitesDeleted = new ArrayList<>();
 
     /**
      * Chargement des données au démarrage
      */
-    DataManagerImpl()
-    {
+    DataManagerImpl() {
+
+    }
+
+    private void createFakeData() {
         users = new ArrayList<>();
         magasins = new ArrayList<>();
         visites = new ArrayList<>();
@@ -91,55 +98,45 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public void loadDatas() throws JSONException
-    {
-        // JsonLoader.INSTANCE.loadAllDatas();
+    public void loadDatas() throws JSONException {
+        JsonLoader.INSTANCE.loadAllDatas();
     }
 
     @Override
-    public void setMagasins(ArrayList<Magasin> magasins)
-    {
+    public void setMagasins(ArrayList<Magasin> magasins) {
         this.magasins = magasins;
     }
 
     @Override
-    public void setVisites(ArrayList<Visite> visites)
-    {
+    public void setVisites(ArrayList<Visite> visites) {
         this.visites = visites;
     }
 
     @Override
-    public void setUsers(ArrayList<User> users)
-    {
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
     @Override
-    public ArrayList<User> getAllUsers()
-    {
+    public ArrayList<User> getAllUsers() {
         return users;
     }
 
     @Override
-    public ArrayList<Visite> getAllVisites()
-    {
+    public ArrayList<Visite> getAllVisites() {
         return visites;
     }
 
     @Override
-    public ArrayList<Magasin> getAllMagasins()
-    {
+    public ArrayList<Magasin> getAllMagasins() {
         return magasins;
     }
 
     @Override
-    public ArrayList<Manager> getAllManagers()
-    {
+    public ArrayList<Manager> getAllManagers() {
         ArrayList<Manager> managers = new ArrayList<>();
-        for (User u : users)
-        {
-            if (EnumUser.MANAGER.equals(u.getUserType()))
-            {
+        for (User u : users) {
+            if (EnumUser.MANAGER.equals(u.getUserType())) {
                 managers.add((Manager) u);
             }
         }
@@ -147,13 +144,10 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public ArrayList<Seller> getAllSellers()
-    {
+    public ArrayList<Seller> getAllSellers() {
         ArrayList<Seller> sellers = new ArrayList<>();
-        for (User u : users)
-        {
-            if (EnumUser.SELLER.equals(u.getUserType()))
-            {
+        for (User u : users) {
+            if (EnumUser.SELLER.equals(u.getUserType())) {
                 sellers.add((Seller) u);
             }
         }
@@ -161,13 +155,10 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public ArrayList<Seller> getAllSellersByManager(int idManager)
-    {
+    public ArrayList<Seller> getAllSellersByManager(int idManager) {
         ArrayList<Seller> sellers = new ArrayList<>();
-        for (User u : users)
-        {
-            if (EnumUser.SELLER.equals(u.getUserType()) && ((Seller) u).getIdManager() == idManager)
-            {
+        for (User u : users) {
+            if (EnumUser.SELLER.equals(u.getUserType()) && ((Seller) u).getIdManager() == idManager) {
                 sellers.add((Seller) u);
             }
         }
@@ -175,13 +166,10 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public ArrayList<Visite> getAllVisiteByUser(int idUser)
-    {
+    public ArrayList<Visite> getAllVisiteByUser(int idUser) {
         ArrayList<Visite> visitesByUser = new ArrayList<>();
-        for (Visite v : visites)
-        {
-            if (idUser == v.getIdVisitor())
-            {
+        for (Visite v : visites) {
+            if (idUser == v.getIdVisitor()) {
                 visitesByUser.add(v);
             }
         }
@@ -189,13 +177,10 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public ArrayList<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne)
-    {
+    public ArrayList<Magasin> getAllMagasinByEnseigne(EnumEnseigne enumEnseigne) {
         ArrayList<Magasin> magasinsByEnseigne = new ArrayList<>();
-        for (Magasin m : magasins)
-        {
-            if (enumEnseigne.equals(m.getEnseigne()))
-            {
+        for (Magasin m : magasins) {
+            if (enumEnseigne.equals(m.getEnseigne())) {
                 magasinsByEnseigne.add(m);
             }
         }
@@ -203,10 +188,8 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Magasin getMagasinById(int id)
-    {
-        for (Magasin m : magasins)
-        {
+    public Magasin getMagasinById(int id) {
+        for (Magasin m : magasins) {
             if (m.getId() == id)
                 return m;
         }
@@ -214,11 +197,9 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public Magasin getMagasinByEnseigneAndCity(EnumEnseigne enseigne, int idCity)
-    {
-        Log.d("enseigne = " + enseigne + " idCity = " + idCity, "enseigne = " + enseigne + " idCity = " + idCity);
-        for (Magasin m : magasins)
-        {
+    public Magasin getMagasinByEnseigneAndCity(EnumEnseigne enseigne, int idCity) {
+        Log.d("enseigne = " + enseigne + " idCity = " + idCity, magasins.toString());
+        for (Magasin m : magasins) {
             if (m.getEnseigne().equals(enseigne) && m.getVille() == idCity)
                 return m;
         }
@@ -226,70 +207,134 @@ class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public void deleteAllVisiteForUserId(int idUser)
-    {
+    public void deleteAllVisiteForUserId(int idUser) {
         ArrayList<Visite> visitesCopy = (ArrayList<Visite>) visites.clone();
-        for (Visite v : visitesCopy)
-        {
-            if (v.getIdVisitor() == idUser)
+        for (Visite v : visitesCopy) {
+            if (v.getIdVisitor() == idUser) {
+                visitesDeleted.add(v);
                 visites.remove(v);
+            }
         }
+        if (ConnectionManager.INSTANCE.isConnected())
+            ConnectionManager.INSTANCE.connectAndSyncDatas();
         saveVisitesToJson();
     }
 
     @Override
-    public void deleteVisiteById(int id)
-    {
+    public void deleteVisiteById(int id) {
         ArrayList<Visite> visitesCopy = (ArrayList<Visite>) visites.clone();
         boolean deleteOk = false;
         int position = 0;
-        for (Visite v : visitesCopy)
-        {
-            if (v.getId() == id)
-            {
+        for (Visite v : visitesCopy) {
+            if (v.getId() == id) {
                 visites.remove(position);
+                visitesDeleted.add(v);
                 deleteOk = true;
                 break;
             }
             position++;
         }
-        if (deleteOk)
+        if (deleteOk) {
+            if (ConnectionManager.INSTANCE.isConnected())
+                ConnectionManager.INSTANCE.connectAndSyncDatas();
             saveVisitesToJson();
+        }
     }
 
     @Override
-    public void saveVisitesToJson()
-    {
+    public void saveAll() {
+        JsonLoader.INSTANCE.saveAllDatas();
+    }
+
+    @Override
+    public void saveVisitesToJson() {
         JsonLoader.INSTANCE.saveAllVisites();
     }
 
     @Override
-    public void saveVisite(Visite visiteToSave)
-    {
+    public void saveVisite(Visite visiteToSave) {
         ArrayList<Visite> visitesCopy = (ArrayList<Visite>) visites.clone();
         boolean saveOk = false;
         int position = 0;
-        for (Visite v : visitesCopy)
-        {
-            if (v.getId() == visiteToSave.getId())
-            {
+        for (Visite v : visitesCopy) {
+            if (v.getId() == visiteToSave.getId()) {
                 visites.set(position, visiteToSave);
                 saveOk = true;
                 break;
             }
             position++;
         }
-        if (saveOk)
+        if (saveOk) {
+            if (ConnectionManager.INSTANCE.isConnected())
+                ConnectionManager.INSTANCE.connectAndSyncDatas();
             saveVisitesToJson();
+        }
     }
 
     @Override
-    public Visite addVisite(int idSeller, int idMagasin, String date)
-    {
-        Visite v = new Visite(idMagasin, idSeller, date, false, "");
+    public Visite addVisite(int idSeller, int idMagasin, String date) {
+        Visite v = new Visite(idMagasin, idSeller, date, false, "", Calendar.getInstance().getTimeInMillis());
         visites.add(v);
+        if (ConnectionManager.INSTANCE.isConnected())
+            ConnectionManager.INSTANCE.connectAndSyncDatas();
         saveVisitesToJson();
         return v;
+    }
+
+    @Override
+    public void init() {
+        //  createFakeData();
+        try {
+            loadDatas();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean syncVisites(ArrayList<Visite> visitesFromServer) {
+        ArrayList<Visite> visitesCopy = (ArrayList<Visite>) visites.clone();
+        ArrayList<Visite> newVisites = new ArrayList<>();
+
+        Visite tmp;
+        for (Visite v : visitesFromServer) {
+            tmp = getVisiteById(v.getId());
+            if (tmp != null) {
+                if (v.getTimestamp() > tmp.getTimestamp())
+                    newVisites.add(v);
+                else newVisites.add(tmp);
+                visitesCopy.remove(tmp);
+            } else {
+                tmp = getVisiteDeletedById(v.getId());
+                if (tmp == null)
+                    newVisites.add(v);
+            }
+        }
+        if (!visitesCopy.isEmpty()) {
+            for (Visite vi : visitesCopy) {
+                if (vi.isCreatedLocally())
+                    newVisites.add(vi);
+            }
+        }
+        visitesDeleted.clear();
+        setVisites(newVisites);
+        return true;
+    }
+
+    private Visite getVisiteDeletedById(int id) {
+        for (Visite v : visitesDeleted) {
+            if (v.getId() == id)
+                return v;
+        }
+        return null;
+    }
+
+    private Visite getVisiteById(int id) {
+        for (Visite v : visites) {
+            if (v.getId() == id)
+                return v;
+        }
+        return null;
     }
 
 

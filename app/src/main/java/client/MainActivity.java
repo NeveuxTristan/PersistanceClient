@@ -2,6 +2,7 @@ package client;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,10 +20,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton buttonStartOffline;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
 
         buttonStartOnline = findViewById(R.id.menu_btn_online);
         buttonStartOffline = findViewById(R.id.menu_btn_offline);
@@ -30,35 +38,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonStartOffline.setOnClickListener(this);
         buttonStartOnline.setOnClickListener(this);
 
+        INSTANCE = this;
 
-        if (!ConnectionManager.INSTANCE.getStateFirstConnection())
-        {
+        if (!ConnectionManager.INSTANCE.getStateFirstConnection()) {
             buttonStartOffline.setEnabled(false);
             Toast.makeText(getApplicationContext(), "This is your first Connection, you must start app online to synchronize datas", Toast.LENGTH_LONG).show();
         }
-        INSTANCE = this;
     }
 
     @Override
-    public void onClick(View v)
-    {
-        if (v == buttonStartOnline)
-        {
-//            ConnectionManager.INSTANCE.connect();
+    public void onClick(View v) {
+        if (v == buttonStartOnline) {
+            buttonStartOffline.setEnabled(true);
+            ConnectionManager.INSTANCE.connect();
+            switchToChooseAccountPage();
+        } else if (v == buttonStartOffline) {
+            ConnectionManager.INSTANCE.disconnect();
             switchToChooseAccountPage();
         }
-        else
-            if (v == buttonStartOffline)
-            {
-                switchToChooseAccountPage();
-            }
     }
 
     /**
      * On passe à la sélection de compte
      */
-    private void switchToChooseAccountPage()
-    {
+    private void switchToChooseAccountPage() {
         Intent menuIntent = new Intent(this, ChooseAccountActivity.class);
         startActivity(menuIntent);
     }

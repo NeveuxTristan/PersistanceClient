@@ -74,9 +74,16 @@ public interface DataManager {
     /**
      * --- SAUVEGARDE DES DONNEES ---
      */
+
+    void saveAll();
+
     void saveVisitesToJson();
 
     void saveVisite(Visite visiteToSave);
 
     Visite addVisite(int idSeller, int idMagasin, String date);
+
+    void init();
+
+    boolean syncVisites(ArrayList<Visite> visitesFromServer);
 }
